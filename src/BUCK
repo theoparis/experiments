@@ -1,10 +1,22 @@
 cxx_binary(
-    name = "stage_manager",
-    srcs = ["main.cpp"],
-    deps = ["third-party//:skia"],
+    name = "stage-manager",
+    srcs = [
+      "stage-manager/main.cc",
+      "stage-manager/stage-strip.cc",
+      "window.cc",
+    ],
+    deps = [
+      "third-party//:skia",
+    ],
+    compiler_flags = [
+      "-ggdb",
+    ],
     # TODO: package zlib-ng
     linker_flags = [
       "-lz",
-      "--ld-path=wild",
+      "-lxcb",
+      "-lxcb-icccm",
+      "-lxcb-render",
+      "-lxcb-image",
     ],
 )

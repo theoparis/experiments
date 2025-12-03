@@ -94,7 +94,10 @@ cxx_library(
       "-mavx512dq",
     ],
     "DEFAULT": []
-  }),
+  }) + [
+    "-DSK_TRIVIAL_ABI=",
+    "-DSK_RELEASE",
+  ],
   public_include_directories = [
     "skia",
   ],
