@@ -1,0 +1,107 @@
+cxx_library(
+  name = "vulkan",
+  public_include_directories = [
+    "Vulkan-Headers/include",
+  ],
+  compiler_flags = [
+    "-DVK_ENABLE_BETA_EXTENSIONS",
+  ],
+  linker_flags = [
+    "-lvulkan",
+  ],
+  visibility = ["PUBLIC"],
+)
+
+cxx_library(
+  name = "avif",
+  srcs = glob([
+    "avif/src/**/*.cpp",
+  ]),
+  public_include_directories = [
+    "avif/include",
+  ],
+  preferred_linkage = "static",
+  visibility = ["PUBLIC"],
+)
+
+cxx_library(
+  name = "png",
+  srcs = glob([
+    "libpng/*.c",
+  ]),
+  public_include_directories = [
+    "libpng",
+  ],
+  preferred_linkage = "static",
+  visibility = ["PUBLIC"],
+)
+
+cxx_library(
+  name = "skia",
+  srcs = glob([
+    "skia/src/base/*.cpp",
+    "skia/src/core/*.cpp",
+    "skia/src/image/*.cpp",
+    "skia/src/capture/*.cpp",
+    "skia/src/utils/*.cpp",
+    "skia/src/shaders/*.cpp",
+    "skia/src/shaders/gradients/*.cpp",
+    "skia/src/text/*.cpp",
+    "skia/src/ports/SkDebug_stdio.cpp",
+    "skia/src/ports/SkOSFile_stdio.cpp",
+    "skia/src/ports/SkOSFile_posix.cpp",
+    "skia/src/ports/SkMemory_malloc.cpp",
+    "skia/src/ports/SkGlobalInitialization_default.cpp",
+    "skia/src/codec/SkCodec.cpp",
+    "skia/src/codec/SkCodecImageGenerator.cpp",
+    "skia/src/codec/SkColorPalette.cpp",
+    "skia/src/codec/SkEncodedInfo.cpp",
+    "skia/src/codec/SkExif.cpp",
+    "skia/src/codec/SkGainmapInfo.cpp",
+    "skia/src/codec/SkHdrAgtm.cpp",
+    "skia/src/codec/SkHdrAgtmParse.cpp",
+    "skia/src/codec/SkHdrMetadata.cpp",
+    "skia/src/codec/SkImageGenerator_FromEncoded.cpp",
+    "skia/src/codec/SkMaskSwizzler.cpp",
+    "skia/src/codec/SkParseEncodedOrigin.cpp",
+    "skia/src/codec/SkPixmapUtils.cpp",
+    "skia/src/codec/SkSampler.cpp",
+    "skia/src/codec/SkSwizzler.cpp",
+    "skia/src/codec/SkTiffUtility.cpp",
+    "skia/src/encode/SkPngEncoderBase.cpp",
+    "skia/src/encode/SkPngEncoderImpl.cpp",
+    "skia/src/encode/SkICC.cpp",
+    "skia/src/encode/SkEncoder.cpp",
+    "skia/src/effects/**/*.cpp",
+    "skia/src/graphite/*.cpp",
+    "skia/src/sksl/*.cpp",
+    "skia/src/sksl/codegen/SkSLRasterPipelineCodeGenerator.cpp",
+    "skia/src/sksl/codegen/SkSLRasterPipelineBuilder.cpp",
+    "skia/src/sksl/analysis/*.cpp",
+    "skia/src/sksl/ir/*.cpp",
+    "skia/src/sksl/tracing/*.cpp",
+    "skia/src/sksl/transform/*.cpp",
+    "skia/modules/skcms/skcms.cc",
+    "skia/modules/skcms/src/*.cc",
+  ], exclude = [
+    "skia/src/sksl/SkSLModuleDataDefault.cpp",
+    "skia/src/utils/SkGetExecutablePath_mac.cpp",
+    "skia/src/utils/SkGetExecutablePath_win.cpp",
+  ]),
+  compiler_flags = select({
+    "config//cpu:x86_64": [
+      "-mavx512f",
+      "-mavx512dq",
+    ],
+    "DEFAULT": []
+  }),
+  public_include_directories = [
+    "skia",
+  ],
+  visibility = ["PUBLIC"],
+  preferred_linkage = "static",
+  deps = [
+    ":vulkan",
+    ":png",
+  ],
+)

@@ -1,0 +1,6 @@
+/third_party/*
+!/third_party/BUCK
+/buck-out
+.cache/
+compile_commands.json
+/*.png

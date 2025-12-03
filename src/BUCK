@@ -1,0 +1,10 @@
+cxx_binary(
+    name = "stage_manager",
+    srcs = ["main.cpp"],
+    deps = ["third-party//:skia"],
+    # TODO: package zlib-ng
+    linker_flags = [
+      "-lz",
+      "--ld-path=wild",
+    ],
+)
