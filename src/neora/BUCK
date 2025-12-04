@@ -1,16 +1,19 @@
-cxx_binary(
-  name = "stage-manager",
+cxx_library(
+  name = "neora",
   srcs = [
-    "stage-manager/main.cc",
-    "stage-manager/stage-manager.cc",
+    "window.cc",
+  ],
+  header_namespace = "neora",
+  exported_headers = [
+    "window.h",
   ],
   deps = [
     "third-party//:skia",
     "third-party//:vulkan",
-    "//src/neora:neora",
   ],
   compiler_flags = [
     "-ggdb",
+    "-std=c++26",
   ],
   # TODO: package zlib-ng
   linker_flags = [
@@ -21,4 +24,6 @@ cxx_binary(
     "-lxcb-render",
     "-lxcb-image",
   ],
+  visibility = ["PUBLIC"],
 )
+

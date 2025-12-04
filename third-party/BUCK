@@ -2,11 +2,15 @@ cxx_library(
   name = "vulkan",
   public_include_directories = [
     "Vulkan-Headers/include",
+    "VulkanMemoryAllocator/include",
+  ],
+  srcs = [
+    "vma.cpp",
   ],
   compiler_flags = [
     "-DVK_ENABLE_BETA_EXTENSIONS",
   ],
-  linker_flags = [
+  exported_linker_flags = [
     "-lvulkan",
   ],
   visibility = ["PUBLIC"],
@@ -46,7 +50,7 @@ cxx_library(
     "skia/src/utils/*.cpp",
     "skia/src/shaders/*.cpp",
     "skia/src/shaders/gradients/*.cpp",
-    "skia/src/text/*.cpp",
+    "skia/src/text/**/*.cpp",
     "skia/src/ports/SkDebug_stdio.cpp",
     "skia/src/ports/SkOSFile_stdio.cpp",
     "skia/src/ports/SkOSFile_posix.cpp",
@@ -73,20 +77,24 @@ cxx_library(
     "skia/src/encode/SkICC.cpp",
     "skia/src/encode/SkEncoder.cpp",
     "skia/src/effects/**/*.cpp",
-    "skia/src/graphite/*.cpp",
-    "skia/src/sksl/*.cpp",
-    "skia/src/sksl/codegen/SkSLRasterPipelineCodeGenerator.cpp",
-    "skia/src/sksl/codegen/SkSLRasterPipelineBuilder.cpp",
-    "skia/src/sksl/analysis/*.cpp",
-    "skia/src/sksl/ir/*.cpp",
-    "skia/src/sksl/tracing/*.cpp",
-    "skia/src/sksl/transform/*.cpp",
+    "skia/src/gpu/*.cpp",
+    "skia/src/gpu/vk/*.cpp",
+    "skia/src/gpu/vk/vulkanmemoryallocator/VulkanMemoryAllocatorWrapper.cpp",
+    "skia/src/gpu/vk/vulkanmemoryallocator/VulkanAMDMemoryAllocator.cpp",
+    "skia/src/gpu/tessellate/*.cpp",
+    "skia/src/gpu/graphite/**/*.cpp",
+    "skia/src/sksl/**/*.cpp",
     "skia/modules/skcms/skcms.cc",
     "skia/modules/skcms/src/*.cc",
   ], exclude = [
-    "skia/src/sksl/SkSLModuleDataDefault.cpp",
+    "skia/src/sksl/SkSLModuleDataFile.cpp",
     "skia/src/utils/SkGetExecutablePath_mac.cpp",
     "skia/src/utils/SkGetExecutablePath_win.cpp",
+    "skia/src/gpu/graphite/dawn/*.cpp",
+    "skia/src/sksl/codegen/SkSLSPIRVtoHLSL.cpp",
+    "skia/src/sksl/codegen/SkSLWGSLValidator.cpp",
+    "skia/src/gpu/graphite/compute/VelloComputeSteps.cpp",
+    "skia/src/gpu/graphite/compute/VelloRenderer.cpp",
   ]),
   compiler_flags = select({
     "config//cpu:x86_64": [
@@ -97,9 +105,13 @@ cxx_library(
   }) + [
     "-DSK_TRIVIAL_ABI=",
     "-DSK_RELEASE",
+    "-DSK_USE_VMA",
+    "-DSK_USE_INTERNAL_VULKAN_HEADERS",
+    "-DNDEBUG",
   ],
   public_include_directories = [
     "skia",
+    "skia/src/gpu/vk/vulkanmemoryallocator",
   ],
   visibility = ["PUBLIC"],
   preferred_linkage = "static",

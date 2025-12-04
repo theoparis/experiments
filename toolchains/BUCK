@@ -14,5 +14,7 @@ system_cxx_toolchain(
   ],
   link_flags = [
     "-Wl,-O3",
+    "-Wl,--as-needed",
+    "-fuse-ld=lld",
   ],
 )

@@ -25,3 +25,8 @@
 
 [build]
   execution_platforms = prelude//platforms:default
+
+[buck2]
+sqlite_materializer_state = true
+defer_write_actions = true
+clean_stale_enabled = true
