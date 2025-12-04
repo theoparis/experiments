@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env nu
 
-mkdir -p third-party
+mkdir third-party
 cd third-party
 gix clone https://skia.googlesource.com/skia
 gix clone https://github.com/KhronosGroup/Vulkan-Headers
@@ -12,4 +12,5 @@ gix clone https://gixlab.freedesktop.org/xorg/lib/libxcb
 gix clone https://github.com/aomediacodec/libavif
 gix clone https://github.com/pnggroup/libpng
 gix clone https://github.com/google/dawn
+gix clone https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
 cd -
